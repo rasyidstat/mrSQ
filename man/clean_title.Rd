@@ -12,3 +12,7 @@ clean_title(txt)
 \description{
 Clean Text for Title View
 }
+\examples{
+clean_title("muhammad rasyid ridha")
+# [1] "Muhammad Rasyid Ridha"
+}
