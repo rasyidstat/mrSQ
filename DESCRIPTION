@@ -1,7 +1,7 @@
 Package: mrSQ
 Type: Package
 Title: Rasyid Ridha's personal package
-Version: 0.0.2
+Version: 0.0.3
 Author: Rasyid Ridha
 Maintainer: Rasyid Ridha <rasyidstat@gmail.com>
 Description: Rasyid Ridha's personal package containing ggplot2 theme, code snippets, etc.
