@@ -70,12 +70,17 @@ qs_table <- function (pattern = NULL,
 #' @param tbl_name name of the table
 #' @param append TRUE
 #' @param overwrite FALSE
+#' @param date TRUE date convert to character
 #' @param db_path database location
 #'
 #' @export
-qs_write <- function (df, tbl_name, append = TRUE, overwrite = FALSE,
+qs_write <- function (df, tbl_name, append = TRUE, overwrite = FALSE, date = TRUE,
                       db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
+  if (date == TRUE) {
+    inx <- sapply(df, function(x) inherits(x, "Date") || inherits(x, "POSIXt"))
+    df[inx] <- lapply(df[inx], as.character)
+  }
   RSQLite::dbWriteTable(con, tbl_name, df,
                         row.names = FALSE,
                         append = append,
