@@ -5,7 +5,7 @@
 #' @param db_name name of the database
 #'
 #' @export
-qs_init <- function (path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db",
+qs_init <- function (path = .dbPath(),
                      db_name = "db_qs.sqlite") {
   RSQLite::dbConnect(RSQLite::SQLite(), sprintf("%s/%s", path, db_name))
 }
@@ -18,7 +18,7 @@ qs_init <- function (path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db",
 #'
 #' @export
 qs_query <- function (query,
-                      db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
+                      db_path = .dbLoc()) {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   res <- RSQLite::dbGetQuery(con, query)
   res <- tibble::as_tibble(res)
@@ -34,7 +34,7 @@ qs_query <- function (query,
 #'
 #' @export
 qs_glance <- function (tbl_name, n = 10,
-                       db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
+                       db_path = .dbLoc()) {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   if (n == "all") {
     res <- RSQLite::dbGetQuery(con, sprintf("select * from %s", tbl_name))
@@ -54,7 +54,7 @@ qs_glance <- function (tbl_name, n = 10,
 #'
 #' @export
 qs_table <- function (pattern = NULL,
-                      db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
+                      db_path = .dbLoc()) {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   res <- RSQLite::dbListTables(con)
   if (!is.null(pattern)) {
@@ -75,7 +75,7 @@ qs_table <- function (pattern = NULL,
 #'
 #' @export
 qs_write <- function (df, tbl_name, append = TRUE, overwrite = FALSE, date = TRUE,
-                      db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
+                      db_path = .dbLoc()) {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   if (date == TRUE) {
     inx <- sapply(df, function(x) inherits(x, "Date") || inherits(x, "POSIXt"))
@@ -96,7 +96,7 @@ qs_write <- function (df, tbl_name, append = TRUE, overwrite = FALSE, date = TRU
 #'
 #' @export
 qs_drop <- function (tbl_name, force = FALSE,
-                     db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
+                     db_path = .dbLoc()) {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   if (!grepl("_", tbl_name) | force == TRUE) {
     RSQLite::dbRemoveTable(con, tbl_name)
@@ -114,7 +114,7 @@ qs_drop <- function (tbl_name, force = FALSE,
 #'
 #' @export
 qs_exec <- function (query,
-                     db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
+                     db_path = .dbLoc()) {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   RSQLite::dbSendQuery(con, query)
 }
@@ -124,11 +124,11 @@ qs_exec <- function (query,
 #' @md
 #'
 #' @export
-qs_dc <- function (db_path = "B:/Cloud/OneDrive/Magnum Opus/project/data/db/db_qs.sqlite") {
+qs_dc <- function (db_path = .dbLoc()) {
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   RSQLite::dbDisconnect(con)
   return(TRUE)
 }
 
-
+tesss <- function() { dbPath }
 
