@@ -6,15 +6,15 @@
 #' @param panel_grid `TRUE`, `FALSE`
 #' @param legend default is `NULL` (to fill, remember quadran position: 1, 2, 3, 4)
 #' @param plot_margin margin(5, 5, 5, 5)
-#' @param font default is DIN font
+#' @param font default is Nunito font
 #' @param ... other parameters
 #'
 #' @export
-theme_din <- function (version = 1,
-                       panel_grid = TRUE,
-                       legend = NULL,
-                       plot_margin = margin(5, 5, 5, 5),
-                       font = "DIN", ...) {
+theme_nunito <- function (version = 1,
+                          panel_grid = TRUE,
+                          legend = NULL,
+                          plot_margin = margin(5, 5, 5, 5),
+                          font = "Nunito", ...) {
 
   if (version == 1) {
     ret <- hrbrthemes::theme_ipsum(base_family=font,
