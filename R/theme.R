@@ -1,4 +1,4 @@
-#' ggplot2 theme using DIN font
+#' ggplot2 theme using Nunito font
 #'
 #' @md
 #' @param version default is version 1 which is based on theme_ipsum,
