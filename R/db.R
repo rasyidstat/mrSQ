@@ -34,6 +34,7 @@ sqlite_init <- function (path = getOption("mrsq_db_dir"),
 sqlite_query <- function (query,
                           path = getOption("mrsq_db_dir"),
                           db_name = getOption("mrsq_db_name")) {
+  db_path <- sprintf("%s/%s", path, db_name)
   con <- RSQLite::dbConnect(RSQLite::SQLite(), db_path)
   res <- RSQLite::dbGetQuery(con, query)
   res <- tibble::as_tibble(res)
