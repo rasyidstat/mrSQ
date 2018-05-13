@@ -20,6 +20,7 @@ pq_query <- function (query,
                                 password = password)
   res <- RPostgreSQL::dbGetQuery(con, query)
   res <- tibble::as_tibble(res)
+  RPostgreSQL::dbDisconnect(con)
   res
 }
 
@@ -52,6 +53,7 @@ pq_glance <- function (tbl_name,
                                                 tbl_name, n))
   }
   res <- tibble::as_tibble(res)
+  RPostgreSQL::dbDisconnect(con)
   res
 }
 
@@ -79,6 +81,7 @@ pq_table <- function (pattern = NULL,
   if (!is.null(pattern)) {
     res <- res[grepl(pattern, res)]
   }
+  RPostgreSQL::dbDisconnect(con)
   res
 }
 
@@ -110,6 +113,7 @@ pq_write <- function (df, tbl_name, append = TRUE, overwrite = FALSE, date = TRU
                             row.names = FALSE,
                             append = append,
                             overwrite = overwrite)
+  RPostgreSQL::dbDisconnect(con)
   return(TRUE)
 }
 
@@ -135,8 +139,10 @@ pq_drop <- function (tbl_name, force = FALSE,
                                 password = password)
   if (!grepl("_", tbl_name) | force == TRUE) {
     RPostgreSQL::dbRemoveTable(con, tbl_name)
+    RPostgreSQL::dbDisconnect(con)
     message(sprintf("%s is removed", tbl_name))
   } else {
+    RPostgreSQL::dbDisconnect(con)
     warning(sprintf("%s is not removed, use `force = TRUE`", tbl_name))
   }
 }
@@ -161,7 +167,9 @@ pq_exec <- function (query,
                                 port = port,
                                 user = user,
                                 password = password)
-  RPostgreSQL::dbSendQuery(con, query)
+  res <- RPostgreSQL::dbSendQuery(con, query)
+  RPostgreSQL::dbDisconnect(con)
+  res
 }
 
 #' Disconnect from PostgreSQL database
